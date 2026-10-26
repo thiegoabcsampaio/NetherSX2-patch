@@ -16,15 +16,20 @@ UNALIGNED="$WORK/unaligned.apk"; ALIGNED="$WORK/aligned.apk"
 apktool b -p "$FW_DIR" -o "$UNALIGNED" "$DECODED"
 
 ZIPALIGN="$(find_buildtool zipalign)"
-if "$ZIPALIGN" 2>&1 | grep -q -- '-P <pagesize_kb>'; then
+if "$ZIPALIGN" 2>&1 | grep -q -- '-P'; then
   "$ZIPALIGN" -P 16 -f 4 "$UNALIGNED" "$ALIGNED"
 else
   echo "zipalign without -P support: using align16k.py (stored .so at 16 KB)" >&2
   python3 -I "$ROOT/scripts/align16k.py" "$UNALIGNED" "$ALIGNED"
 fi
 
+python3 -I "$ROOT/scripts/align16k.py" --check "$ALIGNED" || { echo "alignment lost before signing" >&2; exit 1; }
+
+APKSIGNER="$(find_buildtool apksigner)"
+# build-tools >= 35 may rewrite zip padding unless told to keep it
+KEEP=(); "$APKSIGNER" sign 2>&1 | grep -q -- '--alignment-preserved' && KEEP=(--alignment-preserved true)
 rm -f "$OUT_APK" "$OUT_APK.idsig"
-"$(find_buildtool apksigner)" sign --ks "$KEYSTORE" --ks-key-alias "$KS_ALIAS" \
+"$APKSIGNER" sign "${KEEP[@]}" --ks "$KEYSTORE" --ks-key-alias "$KS_ALIAS" \
   --ks-pass env:KS_PASS --key-pass env:KS_PASS \
   --v1-signing-enabled false --v2-signing-enabled true --v3-signing-enabled true \
   --out "$OUT_APK" "$ALIGNED"
