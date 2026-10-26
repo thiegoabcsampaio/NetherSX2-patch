@@ -1,0 +1,9 @@
+*.jks
+*.keystore
+*.idsig
+build/
+decoded/
+original/*.apk
+tools/*.jar
+release/*.apk
+release/*.idsig

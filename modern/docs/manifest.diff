@@ -1,0 +1,48 @@
+--- orig-manifest/AndroidManifest.xml	2026-10-26 17:20:52.754595058 +0000
++++ /home/user/NetherSX2-patch/modern/build/decoded/AndroidManifest.xml	2026-10-26 17:20:31.942593821 +0000
+@@ -2,7 +2,7 @@
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  android:compileSdkVersion="23"
+  android:compileSdkVersionCodename="6.0-2438415" package="xyz.aethersx2.android" platformBuildVersionCode="23" platformBuildVersionName="6.0-2438415">
+     <uses-permission
+  android:name="android.permission.VIBRATE"/>
+     <uses-permission
+  android:name="android.permission.INTERNET"/>
+-    <application
+  android:allowBackup="true"
+  android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+  android:hasFragileUserData="true"
+  android:icon="@mipmap/ic_launcher"
+  android:label="NetherSX2"
+  android:roundIcon="@mipmap/ic_launcher_round"
+  android:supportsRtl="true"
+  android:theme="@style/AppTheme"
+  android:usesCleartextTraffic="true">
++    <application
+  android:allowBackup="true"
+  android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+  android:hasFragileUserData="true"
+  android:icon="@mipmap/ic_launcher"
+  android:label="NetherSX2"
+  android:roundIcon="@mipmap/ic_launcher_round"
+  android:supportsRtl="true"
+  android:theme="@style/AppTheme"
+  android:usesCleartextTraffic="false"
+  android:networkSecurityConfig="@xml/network_security_config"
+  android:dataExtractionRules="@xml/data_extraction_rules"
+  android:fullBackupContent="@xml/backup_rules"
+  android:enableOnBackInvokedCallback="false">
+         <activity
+  android:exported="false"
+  android:label="@string/save_state_manager_title"
+  android:name="xyz.aethersx2.android.SaveStateManagerActivity"
+  android:theme="@style/AppTheme"/>
+         <activity
+  android:exported="false"
+  android:label="@string/memory_card_create_title"
+  android:name="xyz.aethersx2.android.CreateMemoryCardActivity"
+  android:theme="@style/AppTheme"/>
+         <activity
+  android:exported="false"
+  android:name="xyz.aethersx2.android.FileEditorActivity"
+  android:theme="@style/AppTheme"/>
